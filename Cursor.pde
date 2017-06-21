@@ -23,9 +23,17 @@ class Cursor{
     this.c = _c;
   }
   
+  public void update()
+  {
+    
+    this.setPos( new Vector2D( mouseX, mouseY ) ); // Set custom cursor position
+    
+  }
+  
   public void draw()
   {
-    fill(this.c); // Fill with the cursor color
+    stroke(this.c); // Fill with the cursor color
+    strokeWeight(2); // Make it bigger
     line(this.pos.x - this.size / 2, this.pos.y, // Horizontal line segment
          this.pos.x + this.size / 2, this.pos.y);
     line(this.pos.x, this.pos.y - this.size / 2, // Vertical line segment

@@ -1,0 +1,4 @@
+enum Layer{
+  GROUND,
+  PROPS
+}
