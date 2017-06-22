@@ -9,7 +9,7 @@ class TextureManager{
     this.propTextures = new ArrayList<Texture>();
   }
   
-  public boolean loadTexture( Layer _layer, String _name, String _path )
+  public boolean loadTexture( Layer _layer, String _name, String _path, Boolean _is2D )
   {
     
     /*#############################
@@ -23,9 +23,9 @@ class TextureManager{
       return false;
     }else{
       if( _layer == Layer.GROUND ) // Ground layer
-        groundTextures.add( new Texture( _name, t) );
+        groundTextures.add( new Texture( _name, t, _is2D) );
       else if( _layer == Layer.PROPS ) // Prop layer. . .
-        propTextures.add( new Texture( _name, t) );
+        propTextures.add( new Texture( _name, t, _is2D) );
       return true;
     }
     

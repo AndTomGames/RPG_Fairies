@@ -42,9 +42,9 @@ void setup() // Setup, called once on start
 void load_textures() // Load some textures
 {
   
-  textureManager.loadTexture( Layer.GROUND ,"grass" , "textures/grass_patch.png" );
-  textureManager.loadTexture( Layer.GROUND, "dirt" , "textures/dirt_patch.png" );
-  textureManager.loadTexture( Layer.PROPS, "bush" , "textures/bush_patch.png" );
+  textureManager.loadTexture( Layer.GROUND ,"grass" , "textures/grass_patch.png", true );
+  textureManager.loadTexture( Layer.GROUND, "dirt" , "textures/dirt_patch.png", true );
+  textureManager.loadTexture( Layer.PROPS, "bush" , "textures/bush.png", false );
   
 }
 
@@ -79,36 +79,45 @@ void draw_out_map()
     rect( pos.x, pos.y, size.x, size.y ); // Draw the borders of each image just for better viewability
     */
     
-    // get position of top corner
-    Vector2D isoPos = new Vector2D( currentMap.getOffset().x + tile.pos.x * tile.texture.image.width, // Get the tile position
-                                    currentMap.getOffset().y + tile.pos.y * tile.texture.image.height );
-    isoPos.cartToIso();
-    
-    // get position of left corner
-    Vector2D isoPosLeft = new Vector2D( currentMap.getOffset().x + tile.pos.x * tile.texture.image.width, // Get the tile position
-                                        currentMap.getOffset().y + (tile.pos.y+1) * tile.texture.image.height );
-    isoPosLeft.cartToIso();
-    
-    // get position of right corner
-    Vector2D isoPosRight = new Vector2D( currentMap.getOffset().x + (tile.pos.x+1) * tile.texture.image.width, // Get the tile position
-                                         currentMap.getOffset().y + tile.pos.y * tile.texture.image.height );
-    isoPosRight.cartToIso();
-    
-    // get position of bottom corner
-    Vector2D isoPosEnd = new Vector2D( currentMap.getOffset().x + (tile.pos.x+1) * tile.texture.image.width, // Get the tile position
-                                       currentMap.getOffset().y + (tile.pos.y+1) * tile.texture.image.height );
-    isoPosEnd.cartToIso();
-    
-    /*########*/
-    
-    // draw the tile
-    beginShape();
-    texture(tile.texture.image);   // set background texture of shape
-    vertex(isoPos.x, isoPos.y, 0, 0); // set top vertex
-    vertex(isoPosLeft.x, isoPosLeft.y, tile.texture.image.width, 0); // set left vertex
-    vertex(isoPosEnd.x, isoPosEnd.y, tile.texture.image.width, tile.texture.image.height); // set bottom vertex
-    vertex(isoPosRight.x, isoPosRight.y, 0, tile.texture.image.height); // set right vertex
-    endShape(CLOSE);
+    if (tile.texture.is2D) {
+      // get position of top corner
+      Vector2D isoPos = new Vector2D( currentMap.getOffset().x + tile.pos.x * tile.texture.image.width, // Get the tile position
+                                      currentMap.getOffset().y + tile.pos.y * tile.texture.image.height );
+      isoPos.cartToIso();
+      
+      // get position of left corner
+      Vector2D isoPosLeft = new Vector2D( currentMap.getOffset().x + tile.pos.x * tile.texture.image.width, // Get the tile position
+                                          currentMap.getOffset().y + (tile.pos.y+1) * tile.texture.image.height );
+      isoPosLeft.cartToIso();
+      
+      // get position of right corner
+      Vector2D isoPosRight = new Vector2D( currentMap.getOffset().x + (tile.pos.x+1) * tile.texture.image.width, // Get the tile position
+                                           currentMap.getOffset().y + tile.pos.y * tile.texture.image.height );
+      isoPosRight.cartToIso();
+      
+      // get position of bottom corner
+      Vector2D isoPosEnd = new Vector2D( currentMap.getOffset().x + (tile.pos.x+1) * tile.texture.image.width, // Get the tile position
+                                         currentMap.getOffset().y + (tile.pos.y+1) * tile.texture.image.height );
+      isoPosEnd.cartToIso();
+      
+      /*########*/
+      
+      // draw the tile
+      beginShape();
+      texture(tile.texture.image);   // set background texture of shape
+      vertex(isoPos.x, isoPos.y, 0, 0); // set top vertex
+      vertex(isoPosLeft.x, isoPosLeft.y, tile.texture.image.width, 0); // set left vertex
+      vertex(isoPosEnd.x, isoPosEnd.y, tile.texture.image.width, tile.texture.image.height); // set bottom vertex
+      vertex(isoPosRight.x, isoPosRight.y, 0, tile.texture.image.height); // set right vertex
+      endShape(CLOSE);
+    } else {
+      Vector2D isoPos = new Vector2D( currentMap.getOffset().x + tile.pos.x * tile.texture.image.width, // Get the tile position
+                                      currentMap.getOffset().y + tile.pos.y * tile.texture.image.height );
+      isoPos.cartToIso();
+      
+      image(tile.texture.image, isoPos.x, isoPos.y, tile.texture.image.width, tile.texture.image.height);
+      rect(isoPos.x, isoPos.y, tile.texture.image.width, tile.texture.image.height);
+    }
   }
   
 }

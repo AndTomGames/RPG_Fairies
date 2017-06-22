@@ -9,7 +9,7 @@ class Map{
   Map()
   {
     this.tiles = new ArrayList<Tile>();
-    this.offset = new Vector2D( width/2, 0f );
+    this.offset = new Vector2D( 0f, 0f );
   }
 
   Map( Vector2D _pos, Vector2D _size, String _name )
